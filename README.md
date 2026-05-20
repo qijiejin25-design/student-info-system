@@ -1,5 +1,10 @@
 # 基于 Spring Boot 的学生信息管理系统
 
+[![CI](https://github.com/qijiejin25-design/student-info-system/actions/workflows/ci.yml/badge.svg)](https://github.com/qijiejin25-design/student-info-system/actions/workflows/ci.yml)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/SpringBoot-3.3-brightgreen)
+![MyBatis](https://img.shields.io/badge/MyBatis-3-blue)
+
 一个基于 **Spring Boot 3 + MyBatis** 的学生信息后台管理系统，实现增删改查、条件检索、分页、登录权限、Excel 导入导出、参数校验、全局异常处理与缓存优化。
 
 > 默认使用 **H2 内嵌数据库 + Caffeine 内存缓存**，clone 下来 `mvn spring-boot:run` 即可启动，无需安装 MySQL 与 Redis。
