@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qijiejin.studentinfo.mapper.StudentMapper">
+
+    <sql id="conditions">
+        <where>
+            <if test="q.name != null and q.name != ''">
+                AND name LIKE CONCAT('%', #{q.name}, '%')
+            </if>
+            <if test="q.studentNo != null and q.studentNo != ''">
+                AND student_no = #{q.studentNo}
+            </if>
+            <if test="q.className != null and q.className != ''">
+                AND class_name = #{q.className}
+            </if>
+            <if test="q.gender != null and q.gender != ''">
+                AND gender = #{q.gender}
+            </if>
+        </where>
+    </sql>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM student
+        <include refid="conditions"/>
+    </select>
+
+    <select id="findPage" resultType="com.qijiejin.studentinfo.entity.Student">
+        SELECT * FROM student
+        <include refid="conditions"/>
+        ORDER BY id DESC
+        LIMIT #{q.size} OFFSET #{q.offset}
+    </select>
+
+    <select id="findAll" resultType="com.qijiejin.studentinfo.entity.Student">
+        SELECT * FROM student
+        <include refid="conditions"/>
+        ORDER BY id DESC
+    </select>
+
+    <select id="findById" resultType="com.qijiejin.studentinfo.entity.Student">
+        SELECT * FROM student WHERE id = #{id}
+    </select>
+
+    <select id="findByStudentNo" resultType="com.qijiejin.studentinfo.entity.Student">
+        SELECT * FROM student WHERE student_no = #{studentNo}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student
+        (student_no, name, gender, age, class_name, major, phone, email, enroll_date)
+        VALUES
+        (#{studentNo}, #{name}, #{gender}, #{age}, #{className}, #{major}, #{phone}, #{email}, #{enrollDate})
+    </insert>
+
+    <update id="update">
+        UPDATE student SET
+            student_no = #{studentNo},
+            name = #{name},
+            gender = #{gender},
+            age = #{age},
+            class_name = #{className},
+            major = #{major},
+            phone = #{phone},
+            email = #{email},
+            enroll_date = #{enrollDate},
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM student WHERE id = #{id}
+    </delete>
+
+    <insert id="batchInsert">
+        INSERT INTO student
+        (student_no, name, gender, age, class_name, major, phone, email, enroll_date)
+        VALUES
+        <foreach collection="list" item="s" separator=",">
+            (#{s.studentNo}, #{s.name}, #{s.gender}, #{s.age}, #{s.className}, #{s.major}, #{s.phone}, #{s.email}, #{s.enrollDate})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 30m
+
+spring:
+  application:
+    name: student-info-system
+  datasource:
+    url: jdbc:h2:mem:studentdb;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.qijiejin.studentinfo.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.qijiejin.studentinfo: debug
+    org.mybatis: warn
